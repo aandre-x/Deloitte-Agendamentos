@@ -14,5 +14,5 @@ import { MatMenuModule } from '@angular/material/menu';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-  logoExists = true; // Defina como false se logo.png não existir
+  logoExists = false; // Mantém texto até resolvermos as imagens
 }

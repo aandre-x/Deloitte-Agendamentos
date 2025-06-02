@@ -3,7 +3,8 @@
   <mat-grid-list cols="3" rowHeight="350px" gutterSize="16px" *ngIf="services$ | async as services">
     <mat-grid-tile *ngFor="let service of services">
       <mat-card class="service-card">
-        <img mat-card-image [src]="service.image" [alt]="service.title">
+        <div class="image-placeholder" *ngIf="!service.image">Imagem Indisponível</div>
+        <img mat-card-image [src]="service.image" [alt]="service.title" *ngIf="service.image">
         <mat-card-content>
           <h2>{{ service.title }}</h2>
           <p>{{ service.description }}</p>

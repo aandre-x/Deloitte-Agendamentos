@@ -19,6 +19,17 @@ mat-grid-list {
   width: 100%;
 }
 
+.image-placeholder {
+  height: 150px;
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #616161;
+  font-size: 1rem;
+  text-align: center;
+}
+
 .service-card {
   display: flex;
   flex-direction: column;
