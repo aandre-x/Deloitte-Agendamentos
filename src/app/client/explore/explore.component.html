@@ -1,0 +1,17 @@
+<div class="explore-container">
+  <h1>Explore Nossos Serviços</h1>
+  <mat-grid-list cols="3" rowHeight="350px" gutterSize="16px" *ngIf="services$ | async as services">
+    <mat-grid-tile *ngFor="let service of services">
+      <mat-card class="service-card">
+        <img mat-card-image [src]="service.image" [alt]="service.title">
+        <mat-card-content>
+          <h2>{{ service.title }}</h2>
+          <p>{{ service.description }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">Agendar</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

@@ -1,0 +1,32 @@
+<div class="dashboard-container">
+  <h1>Painel do Profissional</h1>
+  <div class="dashboard-grid">
+    <mat-card class="appointments-card">
+      <mat-card-header>
+        <mat-card-title>Agendamentos</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-list>
+          <mat-list-item *ngFor="let appointment of appointments">
+            <div class="appointment-item">
+              <h3>{{ appointment.service }}</h3>
+              <p>{{ appointment.date }} às {{ appointment.time }} com {{ appointment.client }}</p>
+            </div>
+            <mat-divider></mat-divider>
+          </mat-list-item>
+        </mat-list>
+        <button mat-raised-button color="primary">Gerenciar Agenda</button>
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="settings-card">
+      <mat-card-header>
+        <mat-card-title>Configurações</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p><strong>Nome:</strong> Dr. Exemplo</p>
+        <p><strong>Especialidade:</strong> Médico</p>
+        <button mat-raised-button color="primary">Editar Configurações</button>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

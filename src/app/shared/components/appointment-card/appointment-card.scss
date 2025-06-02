@@ -1,0 +1,36 @@
+.appointment-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .appointment-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    p {
+      margin: 0;
+      font-size: 1rem;
+
+      strong {
+        color: #333;
+      }
+    }
+  }
+
+  mat-card-actions {
+    justify-content: flex-end;
+    margin-top: 8px;
+
+    button {
+      margin-left: 8px;
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .appointment-card {
+    padding: 12px;
+  }
+}

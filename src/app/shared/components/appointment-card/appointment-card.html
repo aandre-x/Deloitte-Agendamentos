@@ -1,0 +1,26 @@
+<mat-card class="appointment-card">
+  <mat-card-content>
+    <div class="appointment-details">
+      <p><strong>Data:</strong> {{ appointment?.date || 'N/A' }}</p>
+      <p><strong>Status:</strong> {{ appointment?.status || 'N/A' }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      *ngIf="appointment?.status === 'SCHEDULED'"
+      mat-raised-button
+      color="warn"
+      (click)="emitCancel()"
+    >
+      Cancelar
+    </button>
+    <button
+      *ngIf="appointment?.status === 'SCHEDULED' && isProfessional"
+      mat-raised-button
+      color="primary"
+      (click)="emitStatus('COMPLETED')"
+    >
+      Concluir
+    </button>
+  </mat-card-actions>
+</mat-card>
