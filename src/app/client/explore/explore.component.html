@@ -1,18 +1,16 @@
-<div class="explore-container">
+<div class="container">
   <h1>Explore Nossos Serviços</h1>
-  <mat-grid-list cols="3" rowHeight="350px" gutterSize="16px" *ngIf="services$ | async as services">
-    <mat-grid-tile *ngFor="let service of services">
-      <mat-card class="service-card">
-        <div class="image-placeholder" *ngIf="!service.image">Imagem Indisponível</div>
-        <img mat-card-image [src]="service.image" [alt]="service.title" *ngIf="service.image">
-        <mat-card-content>
-          <h2>{{ service.title }}</h2>
-          <p>{{ service.description }}</p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Agendar</button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div class="services-grid">
+    <mat-card class="service-card" *ngFor="let service of services$ | async">
+      <mat-card-header>
+        <mat-card-title>{{ service.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>{{ service.description || 'Descrição do serviço em breve.' }}</p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button color="primary" [routerLink]="['/client/schedule']">Agendar</button>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 </div>

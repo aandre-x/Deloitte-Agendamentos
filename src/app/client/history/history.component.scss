@@ -1,8 +1,9 @@
+/* src/app/client/history/history.component.scss */
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 32px 16px;
-  background-color: #fafafa;
+  background: #fafafa;
   min-height: calc(100vh - 64px);
 }
 
@@ -14,15 +15,15 @@ h1 {
   margin-bottom: 32px;
 }
 
-.services-grid {
+.appointments-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
 }
 
-.service-card {
-  background-color: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0,0.1);
+.appointment-card {
+  background: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   padding: 16px;
 }
@@ -46,7 +47,7 @@ mat-card-actions {
     font-size: 1.5rem;
   }
 
-  .services-grid {
+  .appointments-grid {
     grid-template-columns: 1fr;
   }
 }

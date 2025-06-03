@@ -1,3 +1,4 @@
+// src/app/client/profile/profile.component.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
@@ -5,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ClientService } from '../client.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,13 +19,23 @@ export class ProfileComponent {
   profileForm: FormGroup;
   profileImage: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private clientService: ClientService) {
     this.profileForm = this.fb.group({
-      name: ['Usuário Exemplo', [Validators.required, Validators.minLength(3)]],
-      email: ['usuario@exemplo.com', [Validators.required, Validators.email]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.pattern(/^\d{10,11}$/)]],
       birthDate: ['', [Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]],
       address: ['', [Validators.maxLength(100)]]
+    });
+
+    this.clientService.getProfile().subscribe(profile => {
+      this.profileForm.patchValue({
+        name: profile.name,
+        email: profile.email,
+        phone: profile.phone,
+        birthDate: profile.birthDate,
+        address: profile.address
+      });
     });
   }
 

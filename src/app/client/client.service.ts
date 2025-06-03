@@ -1,26 +1,50 @@
+// src/app/client/client.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { ScheduleService } from './schedule.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ScheduleService {
-  getServices(): Observable<{ id: number; name: string }[]> {
-    return of([
-      { id: 1, name: 'Consulta Médica' },
-      { id: 2, name: 'Fisioterapia' },
-      { id: 3, name: 'Nutrição' }
-    ]);
+export class ClientService {
+  constructor(private scheduleService: ScheduleService) {}
+
+  getProfile(): Observable<{ name: string; email: string; phone?: string; birthDate?: string; address?: string }> {
+    return of({
+      name: 'Usuário Exemplo',
+      email: 'usuario@exemplo.com'
+    });
   }
 
-  getProfessionals(serviceId: number): Observable<{ id: number; name: string }[]> {
-    return of([
-      { id: 1, name: 'Dr. João Silva' },
-      { id: 2, name: 'Dra. Maria Santos' }
-    ]);
+  getServices(): Observable<{ id: number; name: string; description: string }[]> {
+    return this.scheduleService.getServices().pipe(
+      map(services => services.map(service => ({
+        id: service.id,
+        name: service.name,
+        description: `Serviço de ${service.name.toLowerCase()} com profissionais qualificados.`
+      })))
+    );
   }
 
-  getAvailableSlots(professionalId: number, date: string): Observable<string[]> {
-    return of(['09:00', '10:00', '14:00', '15:00']);
+  getAppointments(): Observable<{ id: number; service: string; professional: string; date: string; slot: string; status: string }[]> {
+    return of([
+      {
+        id: 1,
+        service: 'Consulta Médica',
+        professional: 'Dr. João Silva',
+        date: '2025-06-03',
+        slot: '09:00',
+        status: 'Agendado'
+      },
+      {
+        id: 2,
+        service: 'Fisioterapia',
+        professional: 'Dra. Maria Santos',
+        date: '2025-05-30',
+        slot: '14:00',
+        status: 'Concluído'
+      }
+    ]);
   }
 }

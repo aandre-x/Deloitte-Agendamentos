@@ -1,32 +1,7 @@
 <div class="dashboard-container">
-  <h1>Meu Painel</h1>
-  <div class="dashboard-grid">
-    <mat-card class="appointments-card">
-      <mat-card-header>
-        <mat-card-title>Agendamentos</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <mat-list>
-          <mat-list-item *ngFor="let appointment of appointments">
-            <div class="appointment-item">
-              <h3>{{ appointment.service }}</h3>
-              <p>{{ appointment.date }} às {{ appointment.time }} com {{ appointment.professional }}</p>
-            </div>
-            <mat-divider></mat-divider>
-          </mat-list-item>
-        </mat-list>
-        <button mat-raised-button color="primary" routerLink="/client/explore">Novo Agendamento</button>
-      </mat-card-content>
-    </mat-card>
-    <mat-card class="profile-card">
-      <mat-card-header>
-        <mat-card-title>Perfil</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        <p><strong>Nome:</strong> Usuário Exemplo</p>
-        <p><strong>Email:</strong> usuarioexemplo.com</p> <!--add o @ -->
-        <button mat-raised-button color="primary">Editar Perfil</button>
-      </mat-card-content>
-    </mat-card>
-  </div>
+  <h1>Bem-vindo ao Sistema de Agendamento</h1>
+  <p>Explore serviços, edite seu perfil ou agende uma consulta.</p>
+  <button mat-fab color="primary" class="fab" routerLink="/client/schedule">
+    <mat-icon>schedule</mat-icon>
+  </button>
 </div>
