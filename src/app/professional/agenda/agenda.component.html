@@ -1,17 +1,21 @@
 <div class="agenda-container">
-  <h2>Minha Agenda</h2>
-  <form [formGroup]="filterForm">
+  <h2>Agenda</h2>
+  <form [formGroup]="filterForm" (ngSubmit)="loadAgenda()">
     <mat-form-field appearance="fill">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status">
-        <mat-option value="">Todos</mat-option>
-        <mat-option value="Pendente">Pendente</mat-option>
-        <mat-option value="Concluído">Concluído</mat-option>
-        <mat-option value="Cancelado">Cancelado</mat-option>
-      </mat-select>
+      <mat-label>Data Inicial</mat-label>
+      <input matInput type="date" formControlName="startDate">
     </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Data Final</mat-label>
+      <input matInput type="date" formControlName="endDate">
+    </mat-form-field>
+    <button mat-button type="submit">Filtrar</button>
   </form>
   <mat-table [dataSource]="appointments">
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
+      <mat-cell *matCellDef="let appointment">{{ appointment.id }}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="date">
       <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
       <mat-cell *matCellDef="let appointment">{{ appointment.date }}</mat-cell>
@@ -31,13 +35,6 @@
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
       <mat-cell *matCellDef="let appointment">{{ appointment.status }}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
-      <mat-cell *matCellDef="let appointment">
-        <button mat-button (click)="updateStatus(appointment.id, 'Concluído')">Concluído</button>
-        <button mat-button (click)="updateStatus(appointment.id, 'Cancelado')">Cancelar</button>
-      </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>

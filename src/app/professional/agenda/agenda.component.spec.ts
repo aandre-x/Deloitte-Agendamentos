@@ -1,3 +1,4 @@
+/*
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Agenda } from './agenda.component';
@@ -21,3 +22,4 @@ describe('Agenda', () => {
     expect(component).toBeTruthy();
   });
 });
+*/

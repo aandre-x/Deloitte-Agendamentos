@@ -1,16 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { MatTableModule } from '@angular/material/table';
-
-interface Service {
-  id: string;
-  name: string;
-  description: string;
-}
+import { ProfessionalService } from '../professional.service';
 
 @Component({
   selector: 'app-services',
@@ -20,50 +15,66 @@ interface Service {
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
-    MatTableModule
+    MatCardModule,
+    MatButtonModule
   ],
   templateUrl: './services.component.html',
   styleUrls: ['./services.component.scss']
 })
-export class ServicesComponent {
+export class ServicesComponent implements OnInit {
   serviceForm: FormGroup;
-  services: Service[] = [
-    { id: '1', name: 'Consulta Médica', description: 'Consulta geral' },
-    { id: '2', name: 'Fisioterapia', description: 'Sessão de fisioterapia' }
-  ];
-  displayedColumns = ['name', 'description', 'actions'];
+  services: { id: string; name: string; description: string }[] = [];
   editingId: string | null = null;
 
-  constructor(private fb: FormBuilder) {
+  constructor(
+    private fb: FormBuilder,
+    private professionalService: ProfessionalService
+  ) {
     this.serviceForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: ['', Validators.required],
       description: ['', Validators.required]
     });
   }
 
-  addService(): void {
+  ngOnInit(): void {
+    this.professionalService.getServices().subscribe((services: { id: string; name: string; description: string }[]) => {
+      this.services = services;
+    });
+  }
+
+  submitService(): void {
     if (this.serviceForm.valid) {
-      const service: Service = {
-        id: this.editingId || Date.now().toString(),
-        ...this.serviceForm.value
-      };
+      const service = this.serviceForm.value;
       if (this.editingId) {
-        this.services = this.services.map(s => s.id === this.editingId ? service : s);
+        this.professionalService.updateService({ id: this.editingId, ...service }).subscribe((updatedService: { id: string; name: string; description: string }) => {
+          this.services = this.services.map(s => s.id === updatedService.id ? updatedService : s);
+          this.resetForm();
+        });
       } else {
-        this.services.push(service);
+        this.professionalService.createService(service).subscribe((newService: { id: string; name: string; description: string }) => {
+          this.services.push(newService);
+          this.resetForm();
+        });
       }
-      this.serviceForm.reset();
-      this.editingId = null;
     }
   }
 
-  editService(service: Service): void {
+  editService(service: { id: string; name: string; description: string }): void {
     this.editingId = service.id;
-    this.serviceForm.patchValue(service);
+    this.serviceForm.patchValue({
+      name: service.name,
+      description: service.description
+    });
   }
 
   deleteService(id: string): void {
-    this.services = this.services.filter(s => s.id !== id);
+    this.professionalService.deleteService(id).subscribe(() => {
+      this.services = this.services.filter(s => s.id !== id);
+    });
+  }
+
+  resetForm(): void {
+    this.serviceForm.reset();
+    this.editingId = null;
   }
 }

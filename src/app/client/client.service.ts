@@ -1,14 +1,13 @@
-// src/app/client/client.service.ts
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { ScheduleService } from './schedule.service';
+import { ProfessionalService } from '../professional/professional.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
-  constructor(private scheduleService: ScheduleService) {}
+  constructor(private professionalService: ProfessionalService) {}
 
   getProfile(): Observable<{ name: string; email: string; phone?: string; birthDate?: string; address?: string }> {
     return of({
@@ -18,9 +17,9 @@ export class ClientService {
   }
 
   getServices(): Observable<{ id: number; name: string; description: string }[]> {
-    return this.scheduleService.getServices().pipe(
+    return this.professionalService.getServices().pipe(
       map(services => services.map(service => ({
-        id: service.id,
+        id: parseInt(service.id, 10),
         name: service.name,
         description: `Serviço de ${service.name.toLowerCase()} com profissionais qualificados.`
       })))
@@ -33,7 +32,7 @@ export class ClientService {
         id: 1,
         service: 'Consulta Médica',
         professional: 'Dr. João Silva',
-        date: '2025-06-03',
+        date: '2025-06-11',
         slot: '09:00',
         status: 'Agendado'
       },
@@ -41,7 +40,7 @@ export class ClientService {
         id: 2,
         service: 'Fisioterapia',
         professional: 'Dra. Maria Santos',
-        date: '2025-05-30',
+        date: '2025-06-12',
         slot: '14:00',
         status: 'Concluído'
       }

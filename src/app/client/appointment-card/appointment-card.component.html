@@ -1,10 +1,10 @@
-<mat-card class="slot-card">
+<mat-card class="appointment-card" *ngIf="slot">
+  <mat-card-title>{{ slot.professional }}</mat-card-title>
   <mat-card-content>
-    <p><strong>Profissional:</strong> {{ slot?.professional }}</p>
-    <p><strong>Horário:</strong> {{ slot?.time }}</p>
-    <p><strong>Data:</strong> {{ slot?.date }}</p>
+    <p>Data: {{ slot.date }}</p>
+    <p>Horário: {{ slot.time }}</p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="bookSlot()">Agendar</button>
+    <button mat-button (click)="bookSlot()">Agendar</button>
   </mat-card-actions>
 </mat-card>

@@ -1,7 +1,13 @@
-<div class="container">
-  <h1>Bem-vindo ao Sistema de Agendamento</h1>
-  <p>Explore nossos serviços, edite seu perfil ou agende uma consulta com facilidade.</p>
-  <button mat-fab class="fab" color="accent" routerLink="/client/schedule">
-    <mat-icon>schedule</mat-icon>
-  </button>
+<div class="dashboard-container">
+  <h2>Dashboard</h2>
+  <mat-card *ngIf="profile">
+    <mat-card-title>Perfil</mat-card-title>
+    <mat-list>
+      <mat-list-item>Nome: {{ profile.name }}</mat-list-item>
+      <mat-list-item>Email: {{ profile.email }}</mat-list-item>
+      <mat-list-item *ngIf="profile.phone">Telefone: {{ profile.phone }}</mat-list-item>
+      <mat-list-item *ngIf="profile.birthDate">Data de Nascimento: {{ profile.birthDate }}</mat-list-item>
+      <mat-list-item *ngIf="profile.address">Endereço: {{ profile.address }}</mat-list-item>
+    </mat-list>
+  </mat-card>
 </div>

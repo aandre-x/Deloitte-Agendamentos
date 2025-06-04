@@ -1,12 +1,37 @@
-.slot-card {
-  display: flex;
-  flex-direction: column;
+.appointment-card {
+  margin-bottom: 16px;
   padding: 16px;
-}
-mat-card-content {
-  flex-grow: 1;
-}
-mat-card-actions {
-  display: flex;
-  justify-content: flex-end;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+
+  mat-card-title {
+    font-size: 18px;
+    color: #333;
+  }
+
+  mat-card-content {
+    font-size: 14px;
+    color: #666;
+  }
+
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  button {
+    margin-left: 8px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 12px;
+
+    mat-card-title {
+      font-size: 16px;
+    }
+
+    mat-card-content {
+      font-size: 12px;
+    }
+  }
 }

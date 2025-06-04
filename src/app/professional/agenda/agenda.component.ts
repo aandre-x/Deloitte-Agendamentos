@@ -1,57 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
 import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-
-interface Appointment {
-  id: string;
-  date: string;
-  time: string;
-  service: string;
-  client: string;
-  status: string;
-}
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatTableModule } from '@angular/material/table';
+import { ProfessionalService } from '../professional.service';
 
 @Component({
   selector: 'app-agenda',
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTableModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSelectModule,
-    ReactiveFormsModule
-  ],
+  imports: [CommonModule, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatTableModule],
   templateUrl: './agenda.component.html',
   styleUrls: ['./agenda.component.scss']
 })
-export class AgendaComponent {
+export class AgendaComponent implements OnInit {
   filterForm: FormGroup;
-  appointments: Appointment[] = [
-    { id: '1', date: '2025-06-10', time: '10:00', service: 'Consulta Médica', client: 'João Silva', status: 'Pendente' },
-    { id: '2', date: '2025-06-15', time: '14:30', service: 'Fisioterapia', client: 'Maria Costa', status: 'Pendente' }
-  ];
-  displayedColumns = ['date', 'time', 'service', 'client', 'status', 'actions'];
+  displayedColumns: string[] = ['id', 'date', 'time', 'service', 'client', 'status'];
+  appointments: { id: string; date: string; time: string; service: string; client: string; status: string }[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private professionalService: ProfessionalService) {
     this.filterForm = this.fb.group({
-      status: ['']
+      startDate: ['2025-06-01'],
+      endDate: ['2025-06-30']
     });
   }
 
   ngOnInit(): void {
-    this.filterForm.get('status')?.valueChanges.subscribe(value => {
-      this.appointments = value
-        ? this.appointments.filter(a => a.status === value)
-        : this.appointments;
-    });
+    this.loadAgenda();
   }
 
-  updateStatus(id: string, status: string): void {
-    this.appointments = this.appointments.map(a => a.id === id ? { ...a, status } : a);
+  loadAgenda(): void {
+    const filter = this.filterForm.value;
+    this.professionalService.getAgenda(filter).subscribe(appointments => {
+      this.appointments = appointments;
+    });
   }
 }

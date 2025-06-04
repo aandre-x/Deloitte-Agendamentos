@@ -1,36 +1,37 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { ClientService } from '../client.service';
+import { ProfessionalService } from '../../professional/professional.service';
 
 @Component({
   selector: 'app-history',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule],
+  imports: [CommonModule, MatTableModule, MatButtonModule],
   templateUrl: './history.component.html',
   styleUrls: ['./history.component.scss']
 })
-export class HistoryComponent {
-  appointments = [
-    {
-      id: 1,
-      service: 'Consulta Médica',
-      professional: 'Dr. João Silva',
-      date: '2025-06-03',
-      slot: '09:00',
-      status: 'Agendado'
-    },
-    {
-      id: 2,
-      service: 'Fisioterapia',
-      professional: 'Dra. Maria Santos',
-      date: '2025-05-30',
-      slot: '14:00',
-      status: 'Concluído'
-    }
-  ];
+export class HistoryComponent implements OnInit {
+  displayedColumns: string[] = ['id', 'service', 'professional', 'date', 'slot', 'status', 'actions'];
+  appointments: { id: number; service: string; professional: string; date: string; slot: string; status: string }[] = [];
+
+  constructor(
+    private clientService: ClientService,
+    private professionalService: ProfessionalService
+  ) {}
+
+  ngOnInit(): void {
+    this.clientService.getAppointments().subscribe(appointments => {
+      this.appointments = appointments;
+    });
+  }
 
   cancelAppointment(id: number): void {
-    console.log(`Cancelando agendamento ID: ${id}`);
+    this.professionalService.updateAppointmentStatus(id, 'Cancelado').subscribe(() => {
+      this.appointments = this.appointments.map(appt =>
+        appt.id === id ? { ...appt, status: 'Cancelado' } : appt
+      );
+    });
   }
 }

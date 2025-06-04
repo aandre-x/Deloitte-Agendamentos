@@ -1,27 +1,16 @@
-<div class="container">
-  <div class="filter-container">
-    <mat-form-field appearance="outline">
-      <mat-label>Especialidade</mat-label>
-      <mat-select formControlName="specialty">
-        <mat-option value="">Todas</mat-option>
-        <mat-option *ngFor="let specialty of specialties" [value]="specialty">{{ specialty }}</mat-option>
-      </mat-select>
+<div class="explore-container">
+  <h2>Explorar Profissionais</h2>
+  <form [formGroup]="searchForm" (ngSubmit)="search()">
+    <mat-form-field appearance="fill">
+      <mat-label>Pesquisar Serviços</mat-label>
+      <input matInput formControlName="query">
     </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Nome</mat-label>
-      <input matInput formControlName="name">
-    </mat-form-field>
-  </div>
+    <button mat-button type="submit">Pesquisar</button>
+  </form>
   <div class="professional-list">
-    <mat-card *ngFor="let professional of filteredProfessionals">
-      <mat-card-title>{{ professional.name }}</mat-card-title>
-      <mat-card-content>
-      <p>Especialidade: {{ professional.specialty }}</p>
-        <p>Cidade: {{ professional.city }}</p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-raised-button color="primary" (click)="showDetails(professional.id)">Detalhes</button>
-      </mat-card-actions>
-      </mat-card>
-    </div>
+    <mat-card *ngFor="let service of services">
+      <mat-card-title>{{ service.name }}</mat-card-title>
+      <mat-card-content>{{ service.description }}</mat-card-content>
+    </mat-card>
+  </div>
 </div>
