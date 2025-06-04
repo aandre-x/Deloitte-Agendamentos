@@ -1,55 +1,14 @@
-<div class="schedule-container">
-  <h1>Agendar Consulta</h1>
-  <mat-card class="schedule-card">
-    <mat-card-header>
-      <mat-card-title>Novo Agendamento</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form [formGroup]="scheduleForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Serviço</mat-label>
-          <mat-select formControlName="service">
-            <mat-option *ngFor="let service of services" [value]="service.id">
-              {{ service.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="scheduleForm.get('service')?.hasError('required')">
-            Serviço é obrigatório
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Profissional</mat-label>
-          <mat-select formControlName="professional">
-            <mat-option *ngFor="let professional of professionals" [value]="professional.id">
-              {{ professional.name }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="scheduleForm.get('professional')?.hasError('required')">
-            Profissional é obrigatório
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Data</mat-label>
-          <input matInput type="date" formControlName="date">
-          <mat-error *ngIf="scheduleForm.get('date')?.hasError('required')">
-            Data é obrigatória
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Horário</mat-label>
-          <mat-select formControlName="slot">
-            <mat-option *ngFor="let slot of slots" [value]="slot">
-              {{ slot }}
-            </mat-option>
-          </mat-select>
-          <mat-error *ngIf="scheduleForm.get('slot')?.hasError('required')">
-            Horário é obrigatório
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="scheduleForm.invalid">
-          Agendar
-        </button>
-      </form>
-    </mat-card-content>
-  </mat-card>
+<div class="container">
+  <form [formGroup]="dateForm">
+    <mat-form-field appearance="outline">
+      <mat-label>Selecione a Data</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="date">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+  <div class="slots-list">
+    <app-appointment-card *ngFor="let slot of filteredSlots" [slot]="slot" (book)="bookSlot($event)"></app-appointment-card>
+    <p *ngIf="!filteredSlots.length">Nenhum horário disponível para esta data.</p>
+  </div>
 </div>

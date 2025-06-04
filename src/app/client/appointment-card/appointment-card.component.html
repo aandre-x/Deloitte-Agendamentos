@@ -1,0 +1,10 @@
+<mat-card class="slot-card">
+  <mat-card-content>
+    <p><strong>Profissional:</strong> {{ slot?.professional }}</p>
+    <p><strong>Horário:</strong> {{ slot?.time }}</p>
+    <p><strong>Data:</strong> {{ slot?.date }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" (click)="bookSlot()">Agendar</button>
+  </mat-card-actions>
+</mat-card>

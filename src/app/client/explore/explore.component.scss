@@ -1,52 +1,32 @@
 .container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 16px;
-  background-color: #fafafa;
-  min-height: calc(100vh - 64px);
+  padding: 16px;
+}
+.filter-container {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+/* Permite quebra de linha em telas menores */
 }
 
-h1 {
-  font-size: 2rem;
-  font-weight: 600;
-  color: #1a237e;
-  text-align: center;
-  margin-bottom: 32px;
+.filter-container mat-form-field {
+  flex: 1;
+  min-width: 150px; /* Evita campos muito estreitos */
 }
 
-.services-grid {
+.professional-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 16px;
 }
 
-.service-card {
-  background-color: #ffffff;
-  box-shadow: 0 4px 16px rgba(0, 0,0.1);
-  border-radius: 8px;
-  padding: 16px;
-}
-
-mat-card-title {
-  font-size: 1.25rem;
-  color: #37474f;
-}
-
-mat-card-content {
-  margin-bottom: 16px;
+mat-card {
+  display: flex;
+  flex-direction: column;
 }
 
 mat-card-actions {
+  margin-top: auto; /* Garante que o botão fique na parte inferior do card */
   display: flex;
   justify-content: flex-end;
-}
-
-@media (max-width: 600px) {
-  h1 {
-    font-size: 1.5rem;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
 }

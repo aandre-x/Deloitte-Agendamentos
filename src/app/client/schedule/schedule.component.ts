@@ -1,63 +1,68 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { ScheduleService } from '../schedule.service';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { AppointmentCardComponent } from '../appointment-card/appointment-card.component';
+
+interface Slot {
+  id: number;
+  professional: string;
+  time: string;
+  date: string;
+}
 
 @Component({
   selector: 'app-schedule',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatSelectModule, MatInputModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    AppointmentCardComponent
+  ],
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']
 })
 export class ScheduleComponent implements OnInit {
-  scheduleForm: FormGroup;
-  services: { id: number; name: string }[] = [];
-  professionals: { id: number; name: string }[] = [];
-  slots: string[] = [];
+  dateForm: FormGroup;
+  slots: Slot[] = [
+    { id: 1, professional: 'Dr. João Silva', time: '09:00', date: '2025-06-11' },
+    { id: 2, professional: 'Dr. João Silva', time: '10:00', date: '2025-06-11' },
+    { id: 3, professional: 'Dra. Maria Oliveira', time: '14:00', date: '2025-06-12' },
+    { id: 4, professional: 'Dra. Maria Oliveira', time: '15:00', date: '2025-06-12' }
+  ];
+  filteredSlots: Slot[] = [];
 
-  constructor(private fb: FormBuilder, private scheduleService: ScheduleService) {
-    this.scheduleForm = this.fb.group({
-      service: ['', Validators.required],
-      professional: ['', Validators.required],
-      date: ['', Validators.required],
-      slot: ['', Validators.required]
+  constructor(private fb: FormBuilder) {
+    this.dateForm = this.fb.group({
+      date: [new Date(2025, 5, 11)] // 11/06/2025
     });
   }
 
   ngOnInit(): void {
-    this.scheduleService.getServices().subscribe(services => {
-      this.services = services;
-    });
-
-    this.scheduleForm.get('service')?.valueChanges.subscribe(serviceId => {
-      this.scheduleService.getProfessionals(serviceId).subscribe(professionals => {
-        this.professionals = professionals;
-        this.scheduleForm.get('professional')?.reset();
-        this.scheduleForm.get('slot')?.reset();
-        this.slots = [];
-      });
-    });
-
-    this.scheduleForm.get('professional')?.valueChanges.subscribe(professionalId => {
-      const date = this.scheduleForm.get('date')?.value;
-      if (professionalId && date) {
-        this.scheduleService.getAvailableSlots(professionalId, date).subscribe(slots => {
-          this.slots = slots;
-          this.scheduleForm.get('slot')?.reset();
-        });
-      }
-    });
+    this.filterSlots();
+    this.dateForm.get('date')?.valueChanges.subscribe(() => this.filterSlots());
   }
 
-  onSubmit(): void {
-    if (this.scheduleForm.valid) {
-      console.log('Agendamento:', this.scheduleForm.value);
+  private filterSlots(): void {
+    const selectedDate = this.dateForm.get('date')?.value;
+    if (selectedDate) {
+      const formattedDate = this.formatDate(selectedDate);
+      console.log('Selected Date:', formattedDate, 'Available Slots:', this.slots);
+      this.filteredSlots = this.slots.filter(slot => slot.date === formattedDate);
+      console.log('Filtered Slots:', this.filteredSlots);
     }
+  }
+
+  private formatDate(date: Date): string {
+    return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`;
+  }
+
+  bookSlot(slot: Slot): void {
+    console.log('Agendamento:', { client: 'Cliente Mock', ...slot });
   }
 }

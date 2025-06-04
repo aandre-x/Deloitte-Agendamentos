@@ -1,0 +1,47 @@
+<div class="availability-container">
+  <h2>Gerenciar Disponibilidade</h2>
+  <form [formGroup]="availabilityForm" (ngSubmit)="addAvailability()">
+    <mat-form-field appearance="fill">
+      <mat-label>Dia</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="day" required>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+      <mat-error *ngIf="availabilityForm.get('day')?.hasError('required')">Dia é obrigatório</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Início</mat-label>
+      <input matInput formControlName="startTime" placeholder="HH:MM" required>
+      <mat-error *ngIf="availabilityForm.get('startTime')?.hasError('required')">Início é obrigatório</mat-error>
+      <mat-error *ngIf="availabilityForm.get('startTime')?.hasError('pattern')">Formato HH:MM</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Fim</mat-label>
+      <input matInput formControlName="endTime" placeholder="HH:MM" required>
+      <mat-error *ngIf="availabilityForm.get('endTime')?.hasError('required')">Fim é obrigatório</mat-error>
+      <mat-error *ngIf="availabilityForm.get('endTime')?.hasError('pattern')">Formato HH:MM</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="availabilityForm.invalid">Adicionar</button>
+  </form>
+  <mat-table [dataSource]="availabilities">
+    <ng-container matColumnDef="day">
+      <mat-header-cell *matHeaderCellDef>Dia</mat-header-cell>
+      <mat-cell *matCellDef="let availability">{{ availability.day }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef>Início</mat-header-cell>
+      <mat-cell *matCellDef="let availability">{{ availability.startTime }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="endTime">
+      <mat-header-cell *matHeaderCellDef>Fim</mat-header-cell>
+      <mat-cell *matCellDef="let availability">{{ availability.endTime }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+      <mat-cell *matCellDef="let availability">
+        <button mat-button (click)="deleteAvailability(availability.id)">Excluir</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

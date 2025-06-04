@@ -1,0 +1,38 @@
+<div class="services-container">
+  <h2>Gerenciar Serviços</h2>
+  <form [formGroup]="serviceForm" (ngSubmit)="addService()">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome do Serviço</mat-label>
+      <input matInput formControlName="name" required>
+      <mat-error *ngIf="serviceForm.get('name')?.hasError('required')">Nome é obrigatório</mat-error>
+      <mat-error *ngIf="serviceForm.get('name')?.hasError('minlength')">Mínimo 3 caracteres</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="description" required>
+      <mat-error *ngIf="serviceForm.get('description')?.hasError('required')">Descrição é obrigatória</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit" [disabled]="serviceForm.invalid">
+      {{ editingId ? 'Atualizar' : 'Adicionar' }}
+    </button>
+  </form>
+  <mat-table [dataSource]="services">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Nome</mat-header-cell>
+      <mat-cell *matCellDef="let service">{{ service.name }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef>Descrição</mat-header-cell>
+      <mat-cell *matCellDef="let service">{{ service.description }}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Ações</mat-header-cell>
+      <mat-cell *matCellDef="let service">
+        <button mat-button (click)="editService(service)">Editar</button>
+        <button mat-button (click)="deleteService(service.id)">Excluir</button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>

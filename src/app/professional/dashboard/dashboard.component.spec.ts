@@ -1,18 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ProfessionalDashboardComponent } from './dashboard.component'; // Ajustado (assumindo nome alternativo)
 
-import { Dashboard } from './dashboard';
-
-describe('Dashboard', () => {
-  let component: Dashboard;
-  let fixture: ComponentFixture<Dashboard>;
+describe('ProfessionalDashboardComponent', () => {
+  let component: ProfessionalDashboardComponent;
+  let fixture: ComponentFixture<ProfessionalDashboardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Dashboard]
-    })
-    .compileComponents();
+      imports: [ProfessionalDashboardComponent]
+    }).compileComponents();
 
-    fixture = TestBed.createComponent(Dashboard);
+    fixture = TestBed.createComponent(ProfessionalDashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,14 +1,13 @@
 <mat-toolbar color="primary" class="header-toolbar">
   <a routerLink="/" class="logo">
-    <img src="/assets/logo.png" alt="Sistema de Agendamento" class="logo-image" *ngIf="logoExists" (error)="logoExists = false">
-    <span *ngIf="!logoExists">Sistema de Agendamento</span>
+    <span>Sistema de Agendamento</span>
   </a>
   <span class="spacer"></span>
   <div class="desktop-menu">
-    <a mat-button routerLink="/auth/login">
+    <a mat-button routerLink="/login">
       <mat-icon>login</mat-icon> Entrar
     </a>
-    <a mat-button routerLink="/auth/register">
+    <a mat-button routerLink="/register">
       <mat-icon>person_add</mat-icon> Registrar
     </a>
     <a mat-button routerLink="/client/profile">
@@ -22,10 +21,10 @@
     <mat-icon>menu</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <a mat-menu-item routerLink="/auth/login">
+    <a mat-menu-item routerLink="/login">
       <mat-icon>login</mat-icon> Entrar
     </a>
-    <a mat-menu-item routerLink="/auth/register">
+    <a mat-menu-item routerLink="/register">
       <mat-icon>person_add</mat-icon> Registrar
     </a>
     <a mat-menu-item routerLink="/client/profile">
@@ -35,4 +34,4 @@
       <mat-icon>schedule</mat-icon> Agendar
     </a>
   </mat-menu>
-</mat-toolbar>  
+</mat-toolbar>

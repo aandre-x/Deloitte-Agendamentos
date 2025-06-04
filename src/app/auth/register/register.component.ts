@@ -1,15 +1,12 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { Router } from '@angular/router';
-import { AuthService } from '../auth.service';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSelectModule } from '@angular/material/select';
 import { MatCardModule } from '@angular/material/card';
-import { CommonModule } from '@angular/common';
+import { MatSelectModule } from '@angular/material/select';
 import { RouterModule } from '@angular/router';
-import { NotificationService } from '../../shared/services/notification.service';
 
 @Component({
   selector: 'app-register',
@@ -20,40 +17,37 @@ import { NotificationService } from '../../shared/services/notification.service'
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule,
     MatCardModule,
+    MatSelectModule,
     RouterModule
   ],
-  templateUrl: './register.html',
-  styleUrls: ['./register.scss']
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-    private notification: NotificationService
-  ) {
+  constructor(private fb: FormBuilder) {
     this.registerForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(6)]],
+      confirmPassword: ['', Validators.required],
       role: ['', Validators.required]
-    });
+    }, { validators: this.matchPasswords });
+  }
+
+  ngOnInit(): void {}
+
+  private matchPasswords(form: FormGroup): { mismatch: true } | null {
+    const password = form.get('password')?.value;
+    const confirmPassword = form.get('confirmPassword')?.value;
+    return password && confirmPassword && password !== confirmPassword ? { mismatch: true } : null;
   }
 
   onSubmit(): void {
     if (this.registerForm.valid) {
-      const { name, email, password, role } = this.registerForm.value;
-      // Comentar até o backend estar disponível
-      // this.authService.register(name!, email!, password!, role!).subscribe({
-      //   next: () => {
-      //     this.router.navigate(['/auth/login']);
-      //   },
-      //   error: () => this.notification.error('Erro ao registrar')
-      // });
+      console.log('Dados do registro:', this.registerForm.value);
     }
   }
 }

@@ -1,0 +1,12 @@
+.slot-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+}
+mat-card-content {
+  flex-grow: 1;
+}
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+}
