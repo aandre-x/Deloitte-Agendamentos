@@ -1,37 +1,4 @@
-.dashboard-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  h2 {
-    color: #1976d2;
-    margin-bottom: 16px;
-  }
-
-  mat-card {
-    margin-bottom: 16px;
-    padding: 16px;
-
-    mat-card-title {
-      font-size: 20px;
-      color: #333;
-    }
-
-    mat-list-item {
-      font-size: 16px;
-      color: #666;
-    }
-
-    mat-divider {
-      margin: 8px 0;
-    }
-  }
-
-  @media (max-width: 600px) {
-    padding: 16px;
-
-    mat-card {
-      padding: 12px;
-    }
-  }
+mat-card {
+  padding: 16px;
+  margin: 16px;
 }

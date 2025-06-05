@@ -1,2 +1,28 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" opened="false" class="sidenav">
+    <mat-nav-list>
+      <h3 mat-subheader>Cliente</h3>
+      <a mat-list-item (click)="navigateAndClose('/client/dashboard')">Dashboard</a>
+      <a mat-list-item (click)="navigateAndClose('/client/explore')">Explorar</a>
+      <a mat-list-item (click)="navigateAndClose('/client/schedule')">Agendamento</a>
+      <a mat-list-item (click)="navigateAndClose('/client/history')">Histórico</a>
+      <a mat-list-item (click)="navigateAndClose('/client/profile')">Perfil</a>
+      <h3 mat-subheader>Profissional</h3>
+      <a mat-list-item (click)="navigateAndClose('/professional/dashboard')">Dashboard</a>
+      <a mat-list-item (click)="navigateAndClose('/professional/services')">Serviços</a>
+      <a mat-list-item (click)="navigateAndClose('/professional/availability')">Disponibilidade</a>
+      <a mat-list-item (click)="navigateAndClose('/professional/agenda')">Agenda</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Sistema de Agendamento</span>
+    </mat-toolbar>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

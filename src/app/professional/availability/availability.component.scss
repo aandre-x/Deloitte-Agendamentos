@@ -1,39 +1,4 @@
-.availability-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
-
-  h2 {
-    color: #1976d2;
-    margin-bottom: 16px;
-  }
-
-  form {
-    margin-bottom: 24px;
-
-    mat-form-field {
-      width: 100%;
-      max-width: 300px;
-      margin-right: 16px;
-    }
-  }
-
-  mat-list {
-    max-width: 600px;
-
-    mat-list-item {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 8px;
-    }
-  }
-
-  @media (max-width: 600px) {
-    padding: 16px;
-
-    form mat-form-field {
-      max-width: 100%;
-      margin-right: 0;
-    }
-  }
+mat-card {
+  padding: 16px;
+  margin: 16px;
 }

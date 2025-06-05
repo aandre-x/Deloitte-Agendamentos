@@ -1,22 +1,26 @@
 <div class="schedule-container">
-  <h2>Agendar Consulta</h2>
-  <form [formGroup]="dateForm">
-    <mat-form-field appearance="fill">
-      <mat-label>Selecione a data</mat-label>
-      <input matInput [matDatepicker]="picker" formControlName="date">
-      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-  </form>
-
-  <div *ngIf="slots.length; else noSlots">
-    <app-appointment-card
-      *ngFor="let slot of slots"
-      [slot]="slot"
-      (book)="openAppointmentDialog(slot)">
-    </app-appointment-card>
-  </div>
-  <ng-template #noSlots>
-    <p>Nenhum horário disponível para a data selecionada.</p>
-  </ng-template>
+  <mat-toolbar color="primary">
+    <span>Agendar Consulta</span>
+  </mat-toolbar>
+  <mat-card>
+    <form [formGroup]="dateForm" class="date-form">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Selecionar Data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+    <div class="slots-grid">
+      <mat-card *ngFor="let slot of slots" class="slot-card" (click)="openAppointmentDialog(slot)">
+        <mat-card-content>
+          <p><strong>{{ slot.professional }}</strong></p>
+          <p>{{ slot.date }} às {{ slot.time }}</p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="accent">Agendar</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </mat-card>
 </div>

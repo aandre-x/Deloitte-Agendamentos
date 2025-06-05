@@ -7,7 +7,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
-import { AppointmentCardComponent } from '../appointment-card/appointment-card.component';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
 import { ProfessionalService } from '../../professional/professional.service';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Appointment } from '../../shared/models/appointment.model';
@@ -31,7 +32,8 @@ interface Slot {
     MatDialogModule,
     MatButtonModule,
     MatInputModule,
-    AppointmentCardComponent
+    MatToolbarModule,
+    MatCardModule
   ],
   templateUrl: './schedule.component.html',
   styleUrls: ['./schedule.component.scss']

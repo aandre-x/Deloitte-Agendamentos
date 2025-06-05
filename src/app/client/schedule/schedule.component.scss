@@ -1,36 +1,36 @@
 .schedule-container {
-  padding: 20px;
-  max-width: 1200px;
-  margin: 0 auto;
+  @extend .container !optional;
+}
 
-  h2 {
-    color: #1976d2;
-    margin-bottom: 16px;
-  }
+.date-form {
+  margin-bottom: 16px;
+}
 
-  form {
-    margin-bottom: 24px;
+.full-width {
+  width: 100%;
+}
 
-    mat-form-field {
-      width: 100%;
-      max-width: 300px;
-    }
-  }
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
 
-  app-appointment-card {
-    display: block;
-    margin-bottom: 16px;
-  }
+.slot-card {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
 
-  p {
-    color: #666;
-  }
+.slot-card:hover {
+  transform: scale(1.02);
+}
 
-  @media (max-width: 600px) {
-    padding: 16px;
+mat-card-content p {
+  margin: 8px 0;
+}
 
-    form mat-form-field {
-      max-width: 100%;
-    }
+@media (max-width: 768px) {
+  .slots-grid {
+    grid-template-columns: 1fr;
   }
 }

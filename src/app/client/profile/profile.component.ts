@@ -1,67 +1,53 @@
-// src/app/client/profile/profile.component.ts
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
+import { MatListModule } from '@angular/material/list';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { ReactiveFormsModule, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { ClientService } from '../client.service';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatFormFieldModule, MatInputModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    MatCardModule,
+    MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    ReactiveFormsModule
+  ],
   templateUrl: './profile.component.html',
   styleUrls: ['./profile.component.scss']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+  profile: { name: string; email: string; phone?: string; birthDate?: string; address?: string } | null = null;
   profileForm: FormGroup;
-  profileImage: string | null = null;
 
-  constructor(private fb: FormBuilder, private clientService: ClientService) {
+  constructor(private clientService: ClientService, private fb: FormBuilder) {
     this.profileForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
-      phone: ['', [Validators.pattern(/^\d{10,11}$/)]],
-      birthDate: ['', [Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]],
-      address: ['', [Validators.maxLength(100)]]
+      name: [''],
+      email: [''],
+      phone: [''],
+      birthDate: [''],
+      address: ['']
     });
+  }
 
+  ngOnInit(): void {
     this.clientService.getProfile().subscribe(profile => {
-      this.profileForm.patchValue({
-        name: profile.name,
-        email: profile.email,
-        phone: profile.phone,
-        birthDate: profile.birthDate,
-        address: profile.address
-      });
+      this.profile = profile;
+      this.profileForm.patchValue(profile);
     });
   }
 
-  onFileSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      if (file.type.startsWith('image/')) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          this.profileImage = e.target?.result as string;
-        };
-        reader.readAsDataURL(file);
-      } else {
-        console.log('Por favor, selecione uma imagem.');
-      }
-    }
-  }
-
-  onSubmit(): void {
-    if (this.profileForm.valid) {
-      const profileData = {
-        ...this.profileForm.value,
-        profileImage: this.profileImage
-      };
-      console.log('Perfil atualizado:', profileData);
-    }
+  saveProfile(): void {
+    const updatedProfile = this.profileForm.value;
+    // Mock: Atualizar perfil (substituir por chamada ao backend)
+    console.log('Perfil atualizado:', updatedProfile);
+    this.profile = updatedProfile;
   }
 }

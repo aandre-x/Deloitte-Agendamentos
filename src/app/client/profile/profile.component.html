@@ -1,61 +1,39 @@
 <div class="profile-container">
-  <h1>Meu Perfil</h1>
-  <mat-card class="profile-card">
-    <mat-card-header>
-      <mat-card-title>Editar Perfil</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="profile-image-container">
-        <img [src]="profileImage || 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIklEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAIC3ARU4ARwAAx+rAC0AAAAASUVORK5CYII='" alt="Foto de Perfil" class="profile-image">
-        <input type="file" accept="image/*" (change)="onFileSelected($event)" id="fileInput">
-        <label for="fileInput" class="upload-button">Escolher Foto</label>
-      </div>
-      <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
-        <mat-form-field appearance="outline">
-          <mat-label>Nome</mat-label>
-          <input matInput formControlName="name">
-          <mat-error *ngIf="profileForm.get('name')?.hasError('required')">
-            Nome é obrigatório
-          </mat-error>
-          <mat-error *ngIf="profileForm.get('name')?.hasError('minlength')">
-            Nome deve ter pelo menos 3 caracteres
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Email</mat-label>
-          <input matInput formControlName="email">
-          <mat-error *ngIf="profileForm.get('email')?.hasError('required')">
-            Email é obrigatório
-          </mat-error>
-          <mat-error *ngIf="profileForm.get('email')?.hasError('email')">
-            Email inválido
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Telefone</mat-label>
-          <input matInput formControlName="phone">
-          <mat-error *ngIf="profileForm.get('phone')?.hasError('pattern')">
-            Telefone inválido (10 ou 11 dígitos)
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Data de Nascimento</mat-label>
-          <input matInput type="date" formControlName="birthDate">
-          <mat-error *ngIf="profileForm.get('birthDate')?.hasError('pattern')">
-            Data inválida (use AAAA-MM-DD)
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-          <mat-label>Endereço</mat-label>
-          <input matInput formControlName="address">
-          <mat-error *ngIf="profileForm.get('address')?.hasError('maxlength')">
-            Endereço deve ter no máximo 100 caracteres
-          </mat-error>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="profileForm.invalid">
-          Salvar
-        </button>
-      </form>
-    </mat-card-content>
+  <h2>Perfil do Usuário</h2>
+  <mat-card>
+    <mat-card-title>Informações</mat-card-title>
+    <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+      <mat-form-field appearance="fill">
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="name">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Telefone</mat-label>
+        <input matInput formControlName="phone">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Data de Nascimento</mat-label>
+        <input matInput formControlName="birthDate">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Endereço</mat-label>
+        <input matInput formControlName="address">
+      </mat-form-field>
+      <button mat-button type="submit">Salvar</button>
+    </form>
+  </mat-card>
+  <mat-card *ngIf="profile">
+    <mat-card-title>Visualização</mat-card-title>
+    <mat-list>
+      <mat-list-item>Nome: {{ profile.name }}</mat-list-item>
+      <mat-list-item>Email: {{ profile.email }}</mat-list-item>
+      <mat-list-item *ngIf="profile.phone">Telefone: {{ profile.phone }}</mat-list-item>
+      <mat-list-item *ngIf="profile.birthDate">Data de Nascimento: {{ profile.birthDate }}</mat-list-item>
+      <mat-list-item *ngIf="profile.address">Endereço: {{ profile.address }}</mat-list-item>
+    </mat-list>
   </mat-card>
 </div>

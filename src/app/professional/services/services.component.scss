@@ -16,27 +16,13 @@
       font-size: 18px;
       color: #333;
     }
-
-    mat-card-content {
-      font-size: 14px;
-      color: #666;
-    }
-  }
-
-  form {
-    margin-bottom: 24px;
-
-    mat-form-field {
-      width: 100%;
-      max-width: 400px;
-    }
   }
 
   @media (max-width: 600px) {
     padding: 16px;
 
-    form mat-form-field {
-      max-width: 100%;
+    mat-card {
+      padding: 12px;
     }
   }
 }
